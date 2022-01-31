@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script type="importmap">
+            <%- include('../../../output/lib/import_map'); %>
+        </script>
+        <%- include('../../../node_modules/@nidget/core/templates/partials/modules'); %>
+    </head>
+    <body>
+        <%- include('../../../node_modules/@nidget/core/templates/partials/nidget-templates'); %>
+
+        <div class="question-container"></div>
+
+        <div class="ribbon">
+            <ribbon-toggle class="ribbon-component green">WIN</ribbon-toggle>
+            <ribbon-toggle class="ribbon-component teal">PLACE</ribbon-toggle>
+            <ribbon-toggle class="ribbon-component yellow">SHOW</ribbon-toggle>
+            <nidget-selector class="ribbon-component"></nidget-selector>
+        </div>
+
+        <div class="horse-container">
+            <div class="horse-card"></div>
+        </div>
+    </body>
+</html>
