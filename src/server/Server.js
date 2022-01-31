@@ -37,9 +37,13 @@ class Server {
         });
 
         /** Start the index **/
-        this.httpsServer.listen(sslPort, ip, () => {
-            console.log(`HTTP listener started on port ${sslPort}`);
-        });        
+        if (this.httpsServer){
+            this.httpsServer.listen(sslPort, ip, () => {
+                console.log(`HTTPS listener started on port ${sslPort}`);
+            });        
+        }else{
+            console.log(`HTTPS server not started`);
+        }
     }
 
     stop () {
