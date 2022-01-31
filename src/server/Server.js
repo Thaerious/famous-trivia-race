@@ -18,8 +18,8 @@ class Server {
 
         if (FS.existsSync(config.server.SSL_KEY) && FS.existsSync(config.server.SSL_CERT)){
             this.httpsServer = https.createServer({
-                key : FS.readFileSync(config.SSL_KEY),
-                cert : FS.readFileSync(config.SSL_CERT)                
+                key : FS.readFileSync(config.server.SSL_KEY),
+                cert : FS.readFileSync(config.server.SSL_CERT)                
             }, this.app);    
         }
 
