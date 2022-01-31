@@ -1,15 +1,24 @@
 import config from "./config.js";
 import Express from "express";
 import http from "http";
+import https from "https";
 import helmet from "helmet";
 import Logger from '@thaerious/logger';
 import cors from "./cors.js";
+import FS from "fs";
 const logger = Logger.getLogger();
 
 class Server {
     constructor () {
         this.app = Express();
         this.httpServer = http.createServer(this.app);
+
+        if (FS.existsSync(config.SSL_KEY) && FS.existsSync(config.SSL_CERT)){
+            this.httpsServer = https.createServer({
+                key : FS.readFileSync(config.SSL_KEY),
+                cert : FS.readFileSync(config.SSL_CERT)                
+            }, this.app);    
+        }
 
         this.app.use(helmet()); // automatic security settings (outgoing response headers)
         this.setupPageRenderingEndpoints();
@@ -20,10 +29,17 @@ class Server {
     }
 
     start (port, ip = `0.0.0.0`) {
+        const sslPort = port + 443;
+
         /** Start the index **/
         this.httpServer.listen(port, ip, () => {
             console.log(`HTTP listener started on port ${port}`);
         });
+
+        /** Start the index **/
+        this.httpsServer.listen(sslPort, ip, () => {
+            console.log(`HTTP listener started on port ${sslPort}`);
+        });        
     }
 
     stop () {
@@ -60,4 +76,4 @@ class Server {
     }
 }
 
-new Server().start(7000, '127.0.0.1');
+new Server().start(7000);
