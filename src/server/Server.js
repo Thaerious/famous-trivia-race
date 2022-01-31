@@ -13,7 +13,10 @@ class Server {
         this.app = Express();
         this.httpServer = http.createServer(this.app);
 
-        if (FS.existsSync(config.SSL_KEY) && FS.existsSync(config.SSL_CERT)){
+        if (!FS.existsSync(config.server.SSL_KEY)) console.log(`${(config.server.SSL_KEY)} not found`);
+        if (!FS.existsSync(config.server.SSL_CERT)) console.log(`${(config.server.SSL_CERT)} not found`);
+
+        if (FS.existsSync(config.server.SSL_KEY) && FS.existsSync(config.server.SSL_CERT)){
             this.httpsServer = https.createServer({
                 key : FS.readFileSync(config.SSL_KEY),
                 cert : FS.readFileSync(config.SSL_CERT)                
